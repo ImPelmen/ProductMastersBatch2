@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class OrderService {
 
     @Autowired
+    @PlovCoinQualifier
     private PaymentProcessor paymentProcessor;
 
     public OrderService() {
