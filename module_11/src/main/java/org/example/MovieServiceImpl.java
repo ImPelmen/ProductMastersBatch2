@@ -15,4 +15,9 @@ public class MovieServiceImpl implements MovieService{
     public List<Movie> listMovies() {
         return movieRepository.getAllMovies();
     }
+
+    @Override
+    public List<Movie> findByDirector(String director) {
+        return movieRepository.findByDirector(director);
+    }
 }

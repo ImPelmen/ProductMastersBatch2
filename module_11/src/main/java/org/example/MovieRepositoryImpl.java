@@ -2,6 +2,7 @@ package org.example;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -14,5 +15,18 @@ public class MovieRepositoryImpl implements MovieRepository{
     @Override
     public List<Movie> getAllMovies() {
         return AVAILABLE_MOVIES;
+    }
+
+    @Override
+    public List<Movie> findByDirector(String director) {
+        List<Movie> movies = new ArrayList<>();
+        for (Movie movie:
+             AVAILABLE_MOVIES) {
+            if (movie.getDirector().equals(director)) {
+                movies.add(movie);
+            }
+        }
+
+        return movies;
     }
 }
