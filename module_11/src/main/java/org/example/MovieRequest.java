@@ -2,14 +2,17 @@ package org.example;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie {
-    private String title;
+public class MovieRequest {
+
+    @NonNull
+    private String name;
+
+    @NonNull
     private String director;
+
     private int year;
 }

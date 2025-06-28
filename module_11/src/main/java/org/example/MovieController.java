@@ -2,10 +2,8 @@ package org.example;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,12 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getMoviesByDirector(
             @RequestParam String name) {
         return ResponseEntity.ok(movieService.findByDirector(name));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> addMovie(
+            @RequestBody @Validated MovieRequest movieRequest) {
+        movieService.addMovie(movieRequest);
+        return ResponseEntity.ok().build();
     }
 }

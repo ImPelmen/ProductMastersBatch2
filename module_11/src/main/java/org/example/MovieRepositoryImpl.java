@@ -7,11 +7,14 @@ import java.util.List;
 
 @Repository
 public class MovieRepositoryImpl implements MovieRepository{
-    private final List<Movie> AVAILABLE_MOVIES = List.of(
-            new Movie("Зеленая миля", "Фрэнк Дарабонт", 1999),
-            new Movie("Побег из шоушенка", "Фрэнк Дарабонт", 1994),
-            new Movie("Художественный фильм Скомуниздили", "Гай Ричи", 2000)
-    );
+    private List<Movie> AVAILABLE_MOVIES = new ArrayList<>();
+
+    public MovieRepositoryImpl() {
+        AVAILABLE_MOVIES.add(new Movie("Зеленая миля", "Фрэнк Дарабонт", 1999));
+        AVAILABLE_MOVIES.add(new Movie("Побег из шоушенка", "Фрэнк Дарабонт", 1994));
+        AVAILABLE_MOVIES.add(new Movie("Художественный фильм Скомуниздили", "Гай Ричи", 2000));
+    }
+
     @Override
     public List<Movie> getAllMovies() {
         return AVAILABLE_MOVIES;
@@ -28,5 +31,10 @@ public class MovieRepositoryImpl implements MovieRepository{
         }
 
         return movies;
+    }
+
+    @Override
+    public void addMovie(Movie movie) {
+        AVAILABLE_MOVIES.add(movie);
     }
 }
