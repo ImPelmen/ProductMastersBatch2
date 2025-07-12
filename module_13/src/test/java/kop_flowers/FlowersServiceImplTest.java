@@ -5,6 +5,7 @@ import kz.kop_flowers.model.dto.CategoryDto;
 import kz.kop_flowers.model.dto.FlowerDto;
 import kz.kop_flowers.model.entity.Category;
 import kz.kop_flowers.model.entity.Flower;
+import kz.kop_flowers.model.exception.CategoryNotFoundException;
 import kz.kop_flowers.model.exception.FlowerNotFoundException;
 import kz.kop_flowers.repository.FlowerRepository;
 import kz.kop_flowers.service.CategoryService;
@@ -101,6 +102,26 @@ public class FlowersServiceImplTest {
         //
         Assertions.assertEquals("Пионы", result.getName());
         Assertions.assertEquals(1, result.getCategory().getId());
+    }
+
+    @Test
+    public void testCreateFlower_whenCategoryNotFound() {
+        Category category = Category.builder().id(1).name("8 марта").build();
+
+        FlowerDto inputFlowerDto = FlowerDto.builder()
+                .name("Роза")
+                .price(BigDecimal.valueOf(100))
+                .size("M")
+                .category(CategoryDto.builder().id(1000000).build())
+                .build();
+
+        Mockito.when(categoryService.getCategoryById(1000000)).thenThrow(new CategoryNotFoundException("Category is not found"));
+        //
+        //
+        CategoryNotFoundException exception = Assertions.assertThrows(CategoryNotFoundException.class, () -> flowerService.createFlower(inputFlowerDto));
+        //
+        //
+        Mockito.verify(flowerRepository, Mockito.never()).save(any(Flower.class));
     }
 
 }
