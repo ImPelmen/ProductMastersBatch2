@@ -1,4 +1,4 @@
-package org.example;
+package org.student_attendance;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.example.model.StudentAttendanceDto;
-import org.example.util.AttendanceNameUtil;
+import org.student_attendance.model.dto.StudentAttendanceDto;
+import org.student_attendance.util.AttendanceNameUtil;
 
 import java.io.*;
 import java.sql.*;

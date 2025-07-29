@@ -1,4 +1,4 @@
-package org.example.model;
+package org.student_attendance.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;

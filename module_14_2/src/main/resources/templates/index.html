@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Посещение лекций</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h2>Посещение лекций</h2>
+<div th:if="${isTeacher}">
+    <form action="#" th:action="@{/attendance}" method="post">
+        <label>ФИО: <input type="text" name="name" required></label><br>
+        <label>Группа: <input type="text" name="groupName" required></label><br>
+        <label>Посетил: <select name="isAttended">
+            <option value="true">Да</option>
+            <option value="false">Нет</option>
+        </select></label><br>
+        <input type="submit" value="Добавить">
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>ФИО</th>
+        <th>Группа</th>
+        <th>Посетил</th>
+    </tr>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.groupName}"></td>
+        <td th:text="${student.isAttended ? 'Да' : 'Нет'}"></td>
+    </tr>
+    <tr th:if="${students.isEmpty()}">
+        <td colspan="3"><h1>Нет данных в таблице</h1></td>
+    </tr>
+</table>
+</body>
+</html>
