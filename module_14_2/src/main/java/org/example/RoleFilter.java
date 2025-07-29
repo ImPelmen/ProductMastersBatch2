@@ -19,10 +19,20 @@ public class RoleFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        if (!Objects.isNull(session)
-                && "teacher".equalsIgnoreCase((String) session.getAttribute("role"))) {
-            chain.doFilter(request, response);
+        if (!Objects.isNull(session)) {
+            String method = req.getMethod();
+
+            if ("GET".equalsIgnoreCase(method) ||
+                    ("POST".equalsIgnoreCase(method) &&
+                            "teacher".equalsIgnoreCase((String) session.getAttribute("role"))
+                    )) {
+                chain.doFilter(request, response);
+            } else {
+                resp.setContentType("text/html; charset=UTF-8");
+                resp.getWriter().println("Вы не можете заполнять присутствие студентов");
+            }
         } else {
+            resp.setContentType("text/html; charset=UTF-8");
             resp.getWriter().println("У вас нет доступа к этой странице");
         }
     }

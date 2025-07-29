@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.example.model.StudentAttendanceDto;
 import org.example.util.AttendanceNameUtil;
 
@@ -12,6 +13,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet("/attendance")
 public class StudentAttendanceServlet extends HttpServlet {
@@ -31,7 +33,6 @@ public class StudentAttendanceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         List<StudentAttendanceDto> list = getStudentsFromDB();
 
         resp.setContentType("text/html; charset=UTF-8");
@@ -55,12 +56,15 @@ public class StudentAttendanceServlet extends HttpServlet {
         out.println("<body>");
         out.println("<h2>Посещение лекций</h2>");
 
-        out.println("<form action='/ServletPractice/attendance' method='POST'>");
-        out.println("ФИО: <input type='text' name='name' required><br>");
-        out.println("Группа: <input type='text' name='groupName' required><br>");
-        out.println("Посетил: <select name='isAttended'><option value='true'>Да</option><option value='false'>Нет</option></select><br>");
-        out.println("<input type='submit' value='Добавить'>");
-        out.println("</form>");
+        HttpSession session = req.getSession();
+        if (!Objects.isNull(session) && "teacher".equalsIgnoreCase((String) session.getAttribute("role"))) {
+            out.println("<form action='/ServletPractice/attendance' method='POST'>");
+            out.println("ФИО: <input type='text' name='name' required><br>");
+            out.println("Группа: <input type='text' name='groupName' required><br>");
+            out.println("Посетил: <select name='isAttended'><option value='true'>Да</option><option value='false'>Нет</option></select><br>");
+            out.println("<input type='submit' value='Добавить'>");
+            out.println("</form>");
+        }
 
         out.println("<table>");
         out.println("    <tr>\n" +
@@ -117,6 +121,6 @@ public class StudentAttendanceServlet extends HttpServlet {
 //        list.add(newStudentAttendanceInfo);
 //        saveToFile(newStudentAttendanceInfo);
 //
-//        resp.sendRedirect("/ServletPractice/attendance");
+        resp.sendRedirect("/ServletPractice/attendance");
     }
 }

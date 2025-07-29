@@ -61,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 
                 resp.sendRedirect("/ServletPractice/attendance");
             } else {
+                resp.setContentType("text/html; charset=UTF-8");
                 resp.getWriter().println("Неверный логин или пароль");
             }
 
